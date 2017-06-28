@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> {% block title %} {% endblock %} </title>
+
+		{% block stylesheets %}
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/myCSS.css') }}">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+		{% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+
+	</head>
+
+    <body>
+    	{% block body %}
+            <header>
+                <img src="{{ asset('images/louvre.jpg') }}" class='img-responsive'>
+                
+    			<nav class="navbar navbar-inverse">
+    				<div class="container-fluid no-padding">
+              			<ul class="nav navbar-nav">
+    						<li class="
+                                {% if app.request.attributes.get('_route') == 'louvre_homepage' %}active{% endif %}">
+                                <a href={{ path('louvre_homepage') }}>Infos</a>
+                            </li>
+    						<li class="
+                                {% if app.request.attributes.get('_route') == 'louvre_commande' %}active{% endif %}">
+                                <a href={{ path('louvre_commande') }}>Billeterie</a>
+                            </li>
+                        </ul>
+                    </div>
+    			</nav>
+            </header>
+
+            <div class="container">
+                {% for message in app.session.flashBag.get('validate') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {% for message in app.session.flashBag.get('warning') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+    	{% endblock %}
+    </body>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p><a href="{{ path('mentions_legales') }}">Mentions légales</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</html>

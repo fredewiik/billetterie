@@ -1,0 +1,61 @@
+{% extends "LouvreBundle::layout.html.twig" %}
+
+{% block title %}
+	Billeterie
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+<div class="container">
+
+	{# On affiche le récapitulatif de la commande avec chaque billet et leur prix #}
+	<table class="table table-striped">
+	<caption>Récapitulatif de votre commande</caption>
+		<tr>
+			<th>Billet</th>
+			<th>Prénom</th>
+			<th>Nom</th>
+			<th>Prix</th>
+		</tr>
+		{% for billet in commande.billets %}
+			<tr>
+				<td>{{ commande.ticketType }}</td>
+				<td>{{ billet.firstName }}</td>
+				<td>{{ billet.name }}</td>
+				<td>{{ billet.price }} €</td>
+			</tr>
+		{% endfor %}
+
+		<tr>
+			<td><b>Total</b></td>
+			<td></td>
+			<td></td>
+			<td><b>{{ total }} €</b></td>
+		</tr>
+	</table>
+
+	{# Bouton Stripe #}
+	<form action="" method="POST">
+       <script
+         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+         data-key="{{ stripe_public_key }}"
+         data-amount="{{ total * 100 }}"
+         data-name="Demo Site"
+         data-description="Widget"
+         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+         data-locale="auto"
+         data-zip-code="true"
+         data-currency="eur"
+         data-label="Payer">
+       </script>
+    </form>
+</div>
+{% endblock %}

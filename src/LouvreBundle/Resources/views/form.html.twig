@@ -1,0 +1,104 @@
+{% extends "LouvreBundle::layout.html.twig" %}
+
+{% block title %}
+	Billeterie
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script>
+        $.fn.datepicker.dates['fr'] = {
+            days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+            daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+            months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+            monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jui", "Aoû", "Sep", "Oct", "Nov", "Déc"],
+            today: "Aujourd'hui",
+            clear: "Effacer",
+            format: "dd/mm/yyyy",
+            titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+            weekStart: 0,
+        };
+
+        var holidays = ['01/05/yyyy', '01/11/yyyy', '25/12/yyyy'];
+
+        $(function() {
+            $('.js-datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                language: 'fr',
+                daysOfWeekDisabled: [0, 2],
+                autoclose: true, 
+                todayHighlight: true,
+                startDate: new Date(),
+                datesDisabled: holidays
+            });
+        });
+    </script>
+    <script>
+        $(function(){
+
+            // Quand je clique sur type de billet on affiche une erreur si jour = aujourd'hui & heure > 14h & a sélectionné billet journée
+            $('#louvrebundle_commande_ticketType').on('click', typeVerif );
+            $('#louvrebundle_commande_date').on('change', typeVerif );
+            $('form').on('submit', function(e){
+                if (!dateVerifTime) {
+                    e.preventDefault();
+                }
+            });
+
+            function typeVerif() {
+                var date = new Date();
+                var hour = date.getHours();
+                var selectedDate = $('#louvrebundle_commande_date').datepicker('getDate');
+                var billet = $("form input[type='radio']:checked").val();
+                
+                if (selectedDate != null) {
+                    if (date.toDateString() === selectedDate.toDateString() && hour > 14 && billet === 'Journée') {
+                        $('#type-error-holder').fadeIn();
+                        dateVerifTime = false;
+                    } else {
+                        $('#type-error-holder').animate({'height':0, 'margin': 0, 'opacity': 0, 'padding': 0}, {complete: function(){
+                                $('#type-error-holder').css({'height': '55px', 'margin-bottom': '20px', 'opacity': '1', 'padding': '15px', 'display': 'none'});
+                            }});
+                        dateVerifTime = true;
+                    }
+                }
+            }
+
+            var dateVerifTime = false;
+            typeVerif();
+
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h1>Achetez vos billets</h1>
+
+                {{ form_start(form) }}
+
+                	{{ form_row(form.date, {'label' : 'Date de votre visite'}) }}
+                	{{ form_row(form.ticketType) }}
+                    <div id="type-error-holder" class="alert alert-danger" style="display: none;">Vous ne pouvez pas commander de billet journée après 14h pour le jour même</div>
+                	{{ form_row(form.nbrPersonnes, {'label' : 'Combien de personnes serez-vous ?'}) }}
+                	{{ form_row(form.email, {'label' : 'Quel est votre email ?'}) }}
+
+                	<input id="subBtn" name="submit" type="submit" class="btn btn-primary" formnovalidate value="Commander">
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

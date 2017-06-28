@@ -1,0 +1,46 @@
+{% extends "LouvreBundle::layout.html.twig" %}
+
+{% block title %}
+	Billeterie
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h1>Veuillez renseigner les coordonnées des personnes</h1>
+
+                {{ form_start(form) }}
+
+                    {% for billet in form.billets %}
+
+                        <h2>Billet n°{{ loop.index }}</h2>
+                        {{ form_row(billet.name, {'label' : 'Quel est votre nom ?'}) }}
+                        {{ form_row(billet.firstName, {'label' : 'Quel est votre prénom ?'}) }}
+                        {{ form_row(billet.birthDate, {'label' : 'Quel est votre date de Naissance ?'}) }}
+                        {{ form_row(billet.country, {'label' : 'Quel est votre nationalité ?'}) }}
+                        {{ form_row(billet.hasDiscount, {'label' : 'Êtes-vous bénéficiaire du tarif réduit ?'}) }}
+                        <hr>
+
+                    {% endfor %}
+
+                    <button id="subBtn" type="submit" class="btn btn-primary" formnovalidate>Commander</button>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

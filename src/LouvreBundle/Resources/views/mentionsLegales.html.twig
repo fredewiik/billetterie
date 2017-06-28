@@ -1,0 +1,43 @@
+{% extends "LouvreBundle::layout.html.twig" %}
+
+{% block title %}
+	Mentions Légales
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<div class="container">
+
+		<h1>Mentions Légales</h1>
+		<hr>
+
+		<h3>Informations éditeur</h3>
+		<p>
+			Musée du Louvre<br>
+			Musée du Louvre, Pavillon Mollien,<br>
+			75058 PARIS CEDEX 01<br>
+			Siret 180 046 237 00012 APE 9103Z<br>
+			Tel : 01 40 20 50 50<br>
+			Directeur de Publication : Jean-Luc MARTINEZ, Président-Directeur
+		</p>
+
+		<h3>Données à caractère personnel</h3>
+		<p>
+			Vos données personnelles peuvent être collectées lors de la navigation sur ce site Internet.
+			De même, les messages électroniques envoyés au Louvre et les adresses électroniques utilisées pour l'envoi d'informations complémentaires sont susceptibles d'être conservées.
+			En application des articles 38, 39 et 40 de la loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, vous disposez, gratuitement, d’un droit d’accès, de rectification, de modification et d’opposition aux données qui vous concernent ou concernent les personnes décédées dont vous êtes les ayants-cause. Si vous souhaitez exercer ce droit vous pouvez vous adresser à la rédaction du site par courrier à l'adresse ci-dessus.
+		</p>
+
+		<h3>Informations publiques</h3>
+		<p>
+			Conformément aux articles L 321-1 et L322-1 du code des relations entre le public et l’administration, les contenus informatifs et de programmation de ce site sont des informations publiques dont la réutilisation est libre, à la condition que ces dernières ne soient pas altérées, que leur sens ne soit pas dénaturé, et que leurs sources et la date de leur dernière mise à jour soient mentionnées.
+			Aucun transfert de propriété des informations publiques n'est opéré au profit du réutilisateur. Ce dernier bénéficie d'un droit personnel et non exclusif de réutilisation de ces informations publiques. Toute personne réutilisant des informations publiques en violation des prescriptions susmentionnées est passible d'une amende prononcée par la commission d'accès aux documents administratifs.
+		</p>
+
+
+	</div>
+{% endblock %}

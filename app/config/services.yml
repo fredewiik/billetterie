@@ -1,0 +1,30 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+    #service_name:
+    #    class: AppBundle\Directory\ClassName
+    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    checkoutManager:
+        class: LouvreBundle\Manager\CheckoutManager
+        arguments:
+            - "%stripe_secret_key%"
+            - "@doctrine.orm.entity_manager"
+            - "@session"
+            - "%tarif_enfant_0_4_ans%"
+            - "%tarif_enfant_4_12_ans%"
+            - "%tarif_normal%"
+            - "%tarif_senior%"
+            - "%tarif_reduit%"
+
+    commande_listener:
+        class: LouvreBundle\Listener\CommandeListener
+        arguments:
+            - "%mailer_user%"
+            - "@templating"
+            - "@mailer"
+            - "@session"
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

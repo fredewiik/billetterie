@@ -1,0 +1,20 @@
+louvre_homepage:
+    path:     /
+    defaults: { _controller: LouvreBundle:Default:index }
+
+louvre_commande:
+    path:     /commande
+    defaults: { _controller: LouvreBundle:Default:commande }
+
+mentions_legales:
+    path:    /mentions-legales
+    defaults: { _controller: LouvreBundle:Default:mentionsLegales }
+
+louvre_billets:
+    path:     /billets
+    defaults: { _controller: LouvreBundle:Default:billets }
+
+louvre_checkout:
+    path: /checkout
+    defaults: 
+        _controller: LouvreBundle:Default:checkout
